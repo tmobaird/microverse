@@ -41,7 +41,7 @@ function buildPrompt(input: PromptInput): string {
     output += `You can take any creative freedom when writing the story. Avoid calling out the part of the story that the text is in.\n`
     output += "Try to avoid using phrases like \"the story ends on a cliffhanger\", or things that explicitly say the literary devices that are being used.\n"
     output += "The story must have a title. The story must be no longer than 750 words.\n\n"
-    output += "The result must also be formatted a raw JSON object. The JSON object must have two keys: title and story, both of which are strings. Don't wrap the JSON object in anything like quotes or backticks.\n"
+    output += "The result must also be formatted a raw JSON object. The JSON object must have two keys: title and story, both of which are strings. Don't wrap the JSON object in anything like quotes or backticks. If quotes using double quote characters are used in the story, they must be escaped.\n"
     return output
 }
 
