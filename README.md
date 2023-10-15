@@ -1,3 +1,10 @@
+### Roadmap
+- [x] Create stories with OpenAI API
+- [x] Use user input to build story generation prompt
+- [x] Save stories to database
+- [ ] Create express API to fetch stories (index, show)
+- [ ] Create mobile app to read stories from API
+
 ### Stack
 - Language: Typescript
 - Framework: Express

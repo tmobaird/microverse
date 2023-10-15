@@ -25,3 +25,8 @@ export const fetchStory = async (id: number) => {
 
     return story
 }
+
+export const fetchStories = async () => {
+    const stories = await prisma.story.findMany({ orderBy: { id: 'desc' } })
+    return stories
+}
