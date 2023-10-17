@@ -11,12 +11,29 @@ app.get("/stories", async (req, res) => {
 
 app.get("/stories/:id", async (req, res) => {
     const storyId = req.params.id
-    if (!storyId) res.status(400).send("Missing story id")
+    let status = 200
+    let data: any = {}
+
+    if (!storyId) {
+        status = 400
+        data = "Missing story id"
+    }
+
     const story = await fetchStory(Number(storyId))
-    if (!story) res.status(404).send("Story not found")
-    res.send(story)
+    data = story
+
+    if (!story) {
+        status = 404
+        data = "Story not found"
+    }
+
+    res.status(status).send(data)
 });
 
-app.listen(port, () => {
-    console.log(`server started at http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`server started at http://localhost:${port}`);
+    });
+}
+
+export default app;

@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient()
 
+
 type StoryParams = {
     title: string;
     body: string;

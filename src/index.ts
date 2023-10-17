@@ -36,7 +36,7 @@ function buildPrompt(input: PromptInput): string {
     output += `The ending of the story should be a ${input.endingStyle.value}, ${input.endingStyle.description}.\n`
     output += `The target audience for this story is people ${input.ageRange}.\n`
     if (keywords.length > 0) {
-        output += `The additional keywords that should influence story are: ${keywords.join(", ")}.\n`
+        output += `The additional descriptors that should influence the plot of the story are: ${keywords.join(", ")}.\n`
     }
     output += `You can take any creative freedom when writing the story. Avoid calling out the part of the story that the text is in.\n`
     output += "Try to avoid using phrases like \"the story ends on a cliffhanger\", or things that explicitly say the literary devices that are being used.\n"
