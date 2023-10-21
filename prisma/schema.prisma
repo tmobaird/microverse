@@ -16,4 +16,21 @@ model Story {
   body      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  votes     Vote[]
+}
+
+enum Direction {
+  UP
+  DOWN
+}
+
+model Vote {
+  id        Int       @id @default(autoincrement())
+  direction Direction @default(UP)
+  story     Story     @relation(fields: [storyId], references: [id])
+  storyId   Int
+  userId    String    @db.VarChar(255) @default("")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

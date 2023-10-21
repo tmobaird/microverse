@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Vote" ADD COLUMN     "userId" VARCHAR(255) NOT NULL DEFAULT '';
