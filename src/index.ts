@@ -1,6 +1,6 @@
 import { checkbox, confirm, input, select } from '@inquirer/prompts';
 import OpenAI from 'openai';
-import { createStory } from './storyRepository';
+import { createStory } from './repositories/storyRepository';
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,

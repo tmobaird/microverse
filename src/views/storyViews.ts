@@ -2,7 +2,7 @@ import { Story } from "@prisma/client";
 import {
   getStoryVoteByUserId,
   getStoryVoteCounts,
-} from "../storyVoteRepository";
+} from "../repositories/storyVoteRepository";
 
 export const renderStories = (stories: Story[]) => {
   return Promise.all(stories.map((story) => renderStory(story)));
@@ -22,6 +22,6 @@ export const renderStory = async (story: Story) => {
     downVotes:
       voteCounts.find((voteCount) => voteCount.direction === "DOWN")?._count
         .id || 0,
-    myVote: (myVote && myVote.direction) || null,
+    myVote: myVote,
   };
 };

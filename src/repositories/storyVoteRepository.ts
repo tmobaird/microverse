@@ -1,10 +1,6 @@
 import { PrismaClient, Vote } from "@prisma/client";
+import { VoteParams } from "../types";
 const prisma = new PrismaClient();
-
-type VoteParams = {
-  userId: string;
-  direction: "UP" | "DOWN";
-};
 
 export const getStoryVotes = async (storyId: number): Promise<Vote[]> => {
   const votes = await prisma.vote.findMany({
@@ -63,28 +59,4 @@ export const createStoryVote = async (
   });
 
   return newVote;
-};
-
-export const updateVote = async (
-  voteId: number,
-  voteParams: VoteParams
-): Promise<Vote> => {
-  const updatedVote = await prisma.vote.update({
-    where: {
-      id: voteId,
-    },
-    data: {
-      ...voteParams,
-    },
-  });
-
-  return updatedVote;
-};
-
-export const deleteStoryVote = (voteId: number): Promise<Vote> => {
-  return prisma.vote.delete({
-    where: {
-      id: voteId,
-    },
-  });
 };

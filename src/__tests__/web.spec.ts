@@ -1,7 +1,7 @@
 import request from "supertest";
 import { truncateStories, truncateVotes } from "../database";
-import { createStory } from "../storyRepository";
 import app from "../web";
+import { createStory } from "../repositories/storyRepository";
 
 
 describe("API", () => {
@@ -87,5 +87,13 @@ describe("API", () => {
                                     .set('Accept', 'application/json')
             expect(response.status).toBe(400)
         })
+    })
+
+    describe("POST /votes/:id", () => {
+        fail()
+    })
+
+    describe("DELETE /votes/:id", () => {
+        fail()
     })
 })

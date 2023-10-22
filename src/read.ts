@@ -1,4 +1,4 @@
-import { fetchStory } from "./storyRepository"
+import { fetchStory } from "./repositories/storyRepository"
 
 async function main(id: number) {
     const story = await fetchStory(id)
