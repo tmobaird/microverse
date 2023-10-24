@@ -4,13 +4,13 @@ import {
   getStoryVoteCounts,
 } from "../repositories/storyVoteRepository";
 
-export const renderStories = (stories: Story[]) => {
-  return Promise.all(stories.map((story) => renderStory(story)));
+export const renderStories = (stories: Story[], userId: string) => {
+  return Promise.all(stories.map((story) => renderStory(story, userId)));
 };
 
-export const renderStory = async (story: Story) => {
+export const renderStory = async (story: Story, userId: string) => {
   const voteCounts = await getStoryVoteCounts(story.id);
-  const myVote = await getStoryVoteByUserId(story.id, "user123");
+  const myVote = await getStoryVoteByUserId(story.id, userId);
 
   return {
     id: story.id,

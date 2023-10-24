@@ -7,12 +7,14 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const stories = await fetchStories();
-  const data = await renderStories(stories);
+  const userId = res.locals.userId;
+  const data = await renderStories(stories, userId);
   res.send(data);
 });
 
 router.get("/:id", async (req, res) => {
   const storyId = req.params.id;
+  const userId = res.locals.userId;
   let status = 200;
   let data: any = {};
 
@@ -24,7 +26,7 @@ router.get("/:id", async (req, res) => {
   const story = await fetchStory(Number(storyId));
 
   if (story) {
-    data = await renderStory(story);
+    data = await renderStory(story, userId);
   }
 
   if (!story) {
@@ -37,7 +39,8 @@ router.get("/:id", async (req, res) => {
 
 router.post("/:id/votes", async (req, res) => {
   const storyId = req.params.id;
-  const { direction, userId } = req.body;
+  const { direction } = req.body;
+  const userId = res.locals.userId;
 
   try {
     const vote = await createStoryVote(Number(storyId), { userId, direction });
