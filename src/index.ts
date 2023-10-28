@@ -159,6 +159,7 @@ async function main() {
           const createdStory = await createStory({
             title: story.title,
             body: story.story,
+            genreList: genres.join(","),
           });
           console.log("Story saved to database", createdStory);
         } catch (error) {

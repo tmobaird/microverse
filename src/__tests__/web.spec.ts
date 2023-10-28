@@ -47,6 +47,7 @@ describe("API", () => {
       const story = await createStory({
         title: "test title",
         body: "test body",
+        genreList: "Action/Adventure,Romance",
       });
 
       const response = await request(app)
@@ -54,6 +55,10 @@ describe("API", () => {
         .set("Authorization", "Bearer 123");
       expect(response.status).toBe(200);
       expect(response.body.id).toBe(story.id);
+      expect(response.body.title).toBe(story.title);
+      expect(response.body.body).toBe(story.body);
+      expect(response.body.genres).toHaveLength(2);
+      expect(response.body.genres).toEqual(["Action/Adventure", "Romance"]);
     });
 
     it("returns 404 when story does not exist", async () => {

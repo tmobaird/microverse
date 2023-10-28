@@ -14,6 +14,7 @@ model Story {
   id        Int     @id @default(autoincrement())
   title     String
   body      String
+  genreList String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

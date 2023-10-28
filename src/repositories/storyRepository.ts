@@ -1,19 +1,44 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-type StoryParams = {
+export type StoryParams = {
   title: string;
   body: string;
+  genreList?: string;
 };
 
-export const createStory = async ({ title, body }: StoryParams) => {
+export type UpdateStoryParams = {
+  title?: string;
+  body?: string;
+  genreList?: string;
+};
+
+export const createStory = async ({ title, body, genreList }: StoryParams) => {
   const newStory = await prisma.story.create({
     data: {
       title,
       body,
+      genreList,
     },
   });
   return newStory;
+};
+
+export const updateStory = async (
+  id: number,
+  { title, body, genreList }: UpdateStoryParams,
+) => {
+  const updatedStory = await prisma.story.update({
+    where: {
+      id,
+    },
+    data: {
+      title,
+      body,
+      genreList,
+    },
+  });
+  return updatedStory;
 };
 
 export const fetchStory = async (id: number) => {

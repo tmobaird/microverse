@@ -13,6 +13,7 @@
     "db:test:migrate": "dotenv -e .env.test prisma migrate dev",
     "create": "npx tsc && node build/index.js",
     "read": "npx tsc && node build/read.js",
+    "update": "npx tsc && node build/update.js",
     "start": "npx tsc && node build/web.js",
     "pretty": "prettier . --write"
   },

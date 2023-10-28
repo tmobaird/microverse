@@ -11,11 +11,16 @@ export const renderStories = (stories: Story[], userId: string) => {
 export const renderStory = async (story: Story, userId: string) => {
   const voteCounts = await getStoryVoteCounts(story.id);
   const myVote = await getStoryVoteByUserId(story.id, userId);
+  let genres: string[] = [];
+  if (story.genreList) {
+    genres = story.genreList.split(",");
+  }
 
   return {
     id: story.id,
     title: story.title,
     body: story.body,
+    genres: genres,
     upVotes:
       voteCounts.find((voteCount) => voteCount.direction === "UP")?._count.id ||
       0,
