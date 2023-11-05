@@ -155,6 +155,11 @@ async function main() {
       if (story) {
         console.log(`===== ${story.title} =====`);
         console.log(story.story);
+        const storyGoodToGo = await confirm({ message: "Is this story sufficient?" });
+        if (!storyGoodToGo) {
+          console.log("Exiting");
+          return;
+        }
         try {
           const createdStory = await createStory({
             title: story.title,
