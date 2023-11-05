@@ -2,10 +2,11 @@ import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
 import storiesController from "./controllers/storiesController";
 import votesController from "./controllers/votesController";
+var morgan = require('morgan')
 
 const app = express();
 app.use(bodyParser.json());
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 const getUserId = (req: Request) => {
   const authorization = req.headers.authorization;
@@ -31,6 +32,7 @@ const authenticator = function (
 };
 
 app.use(authenticator);
+app.use(morgan('combined'));
 app.use("/stories", storiesController);
 app.use("/votes", votesController);
 

@@ -1,18 +1,19 @@
 import express from "express";
+import asyncHandler from "express-async-handler";
 import { fetchStories, fetchStory } from "../repositories/storyRepository";
 import { createStoryVote } from "../repositories/storyVoteRepository";
 import { renderStories, renderStory } from "../views/storyViews";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", asyncHandler(async (req, res, _) => {
   const stories = await fetchStories();
   const userId = res.locals.userId;
   const data = await renderStories(stories, userId);
   res.send(data);
-});
+}));
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", asyncHandler(async (req, res, _) => {
   const storyId = req.params.id;
   const userId = res.locals.userId;
   let status = 200;
@@ -35,9 +36,9 @@ router.get("/:id", async (req, res) => {
   }
 
   res.status(status).send(data);
-});
+}));
 
-router.post("/:id/votes", async (req, res) => {
+router.post("/:id/votes", asyncHandler(async (req, res, _) => {
   const storyId = req.params.id;
   const { direction } = req.body;
   const userId = res.locals.userId;
@@ -49,6 +50,6 @@ router.post("/:id/votes", async (req, res) => {
   } catch (e) {
     res.status(400).send(e);
   }
-});
+}));
 
 export default router;

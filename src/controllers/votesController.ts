@@ -4,10 +4,11 @@ import {
   getVote,
   updateVote,
 } from "../repositories/voteRepository";
+import asyncHandler from "express-async-handler";
 
 const router = express.Router();
 
-router.put("/:voteId", async (req, res) => {
+router.put("/:voteId", asyncHandler(async (req, res, _) => {
   const voteId = req.params.voteId;
   const { direction } = req.body;
   try {
@@ -16,9 +17,9 @@ router.put("/:voteId", async (req, res) => {
   } catch (e) {
     res.status(400).send(e);
   }
-});
+}));
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", asyncHandler(async (req, res, next) => {
   const voteId = req.params.id;
   const userId = res.locals.userId;
   try {
@@ -32,6 +33,6 @@ router.delete("/:id", async (req, res) => {
   } catch (e) {
     res.status(400).send(e);
   }
-});
+}));
 
 export default router;
