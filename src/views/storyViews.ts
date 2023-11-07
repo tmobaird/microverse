@@ -5,10 +5,10 @@ import {
 } from "../repositories/storyVoteRepository";
 
 export const renderStories = (stories: Story[], userId: string) => {
-  return Promise.all(stories.map((story) => renderStory(story, userId)));
+  return Promise.all(stories.map((story) => renderStory(story, userId, false)));
 };
 
-export const renderStory = async (story: Story, userId: string) => {
+export const renderStory = async (story: Story, userId: string, withBody: boolean = true) => {
   const voteCounts = await getStoryVoteCounts(story.id);
   const myVote = await getStoryVoteByUserId(story.id, userId);
   let genres: string[] = [];
@@ -19,7 +19,7 @@ export const renderStory = async (story: Story, userId: string) => {
   return {
     id: story.id,
     title: story.title,
-    body: story.body,
+    ...(withBody ? { body: story.body } : {}),
     genres: genres,
     upVotes:
       voteCounts.find((voteCount) => voteCount.direction === "UP")?._count.id ||
