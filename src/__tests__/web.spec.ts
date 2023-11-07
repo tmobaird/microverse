@@ -1,14 +1,20 @@
 import request from "supertest";
 import { truncateStories, truncateVotes } from "../database";
+import { generateToken } from "../jwtService";
 import { createStory } from "../repositories/storyRepository";
 import {
   createStoryVote,
   getStoryVoteByUserId,
 } from "../repositories/storyVoteRepository";
-import app from "../web";
 import { getVote } from "../repositories/voteRepository";
+import app from "../web";
 
 describe("API", () => {
+  let token: string;
+  beforeEach(() => {
+    token = generateToken("123");
+  });
+
   beforeEach(async () => {
     await truncateStories();
     await truncateVotes();
@@ -28,7 +34,7 @@ describe("API", () => {
 
       const response = await request(app)
         .get("/stories")
-        .set("Authorization", "Bearer 123");
+        .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBeGreaterThan(0);
@@ -37,7 +43,7 @@ describe("API", () => {
           expect.objectContaining({
             id: story.id,
           }),
-        ]),
+        ])
       );
     });
   });
@@ -52,7 +58,7 @@ describe("API", () => {
 
       const response = await request(app)
         .get(`/stories/${story.id}`)
-        .set("Authorization", "Bearer 123");
+        .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(200);
       expect(response.body.id).toBe(story.id);
       expect(response.body.title).toBe(story.title);
@@ -64,7 +70,7 @@ describe("API", () => {
     it("returns 404 when story does not exist", async () => {
       const response = await request(app)
         .get(`/stories/123`)
-        .set("Authorization", "Bearer 123");
+        .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(404);
     });
   });
@@ -80,7 +86,7 @@ describe("API", () => {
         .post(`/stories/${story.id}/votes`)
         .send({ direction: "UP" })
         .set("Accept", "application/json")
-        .set("Authorization", "Bearer 123");
+        .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(201);
       expect(response.body.storyId).toBe(story.id);
       expect(response.body.userId).toBe("123");
@@ -91,7 +97,7 @@ describe("API", () => {
         .post(`/stories/123/votes`)
         .send({ direction: "UP", user_id: "123" })
         .set("Accept", "application/json")
-        .set("Authorization", "Bearer 123");
+        .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(400);
     });
 
@@ -105,7 +111,7 @@ describe("API", () => {
         .post(`/stories/${story.id}/votes`)
         .send({ direction: "WRONG" })
         .set("Accept", "application/json")
-        .set("Authorization", "Bearer 123");
+        .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(400);
     });
   });
@@ -125,7 +131,7 @@ describe("API", () => {
         .put(`/votes/${vote.id}`)
         .send({ direction: "DOWN" })
         .set("Accept", "application/json")
-        .set("Authorization", "Bearer 123");
+        .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toBe(200);
       expect(response.body.direction).toBe("DOWN");
@@ -147,7 +153,7 @@ describe("API", () => {
       const response = await request(app)
         .delete(`/votes/${vote.id}`)
         .set("Accept", "application/json")
-        .set("Authorization", "Bearer 123");
+        .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toBe(204);
       vote = await getStoryVoteByUserId(story.id, "123");
@@ -164,14 +170,36 @@ describe("API", () => {
         userId: "111",
       });
 
+      const tokenTwo = generateToken("222");
       const response = await request(app)
         .delete(`/votes/${vote.id}`)
         .set("Accept", "application/json")
-        .set("Authorization", "Bearer 222");
+        .set("Authorization", `Bearer ${tokenTwo}`);
 
       expect(response.status).toBe(403);
       vote = await getVote(vote.id);
       expect(vote).not.toBeNull();
+    });
+  });
+
+  describe("POST /token", () => {
+    it("returns a generated token", async () => {
+      const response = await request(app)
+        .post("/token")
+        .send({ username: "admin", password: "password" });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        token: expect.any(String),
+      });
+    });
+
+    it("returns a 401 when credentials are incorrect", async () => {
+      const response = await request(app)
+        .post("/token")
+        .send({ username: "fake", password: "fake" });
+
+      expect(response.status).toBe(401);
     });
   });
 });
