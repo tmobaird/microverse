@@ -26,6 +26,7 @@ const endingStyles: EndingStyle[] = [
 
 interface PromptInput {
   theme: string;
+  premise: string;
   genres: string[];
   timePeriod: string;
   location: string;
@@ -41,7 +42,7 @@ function buildPrompt(input: PromptInput): string {
     .filter((keyword) => keyword.length > 0);
   let output = "";
   output += "Write a short story that follows the following prompt:\n";
-  output += `The theme of the story should be ${input.theme}.\n`;
+  output += `The theme of the story should be ${input.theme}. The story should use this premise for inspiration: "${input.premise}"\n`;
   output += `The story should be of the ${input.genres.join(
     ", ",
   )} genre(s), set in the ${input.timePeriod} in ${input.location}.\n`;
@@ -101,6 +102,7 @@ const generateStory = async (prompt: string): Promise<Story | null> => {
 async function main() {
   try {
     const theme = await input({ message: "Theme" });
+    const premise = await input({ message: "Premise" });
 
     const genres = await checkbox({
       message: "Select genres",
@@ -142,6 +144,7 @@ async function main() {
       endingStyle,
       genres,
       location,
+      premise,
       theme,
       timePeriod,
     };
