@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Story } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export type StoryParams = {
@@ -26,7 +26,7 @@ export const createStory = async ({ title, body, genreList }: StoryParams) => {
 
 export const updateStory = async (
   id: number,
-  { title, body, genreList }: UpdateStoryParams,
+  { title, body, genreList }: UpdateStoryParams
 ) => {
   const updatedStory = await prisma.story.update({
     where: {
@@ -54,4 +54,23 @@ export const fetchStory = async (id: number) => {
 export const fetchStories = async () => {
   const stories = await prisma.story.findMany({ orderBy: { id: "desc" } });
   return stories;
+};
+
+export const fetchStoriesByPage = async (
+  cursor: number | null
+): Promise<{ stories: Story[]; nextCursor: number | null }> => {
+  const take = 20;
+  const stories = await prisma.story.findMany({
+    take: take,
+    skip: cursor ? 1 : 0,
+    ...(cursor && { cursor: { id: cursor } }),
+    orderBy: { id: "desc" },
+  });
+
+  const nextCursor = stories.length < take ? null : stories[take - 1].id;
+
+  return {
+    stories,
+    nextCursor: nextCursor,
+  };
 };

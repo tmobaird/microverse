@@ -1,15 +1,20 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import { fetchStories, fetchStory } from "../repositories/storyRepository";
+import { fetchStories, fetchStoriesByPage, fetchStory } from "../repositories/storyRepository";
 import { createStoryVote } from "../repositories/storyVoteRepository";
 import { renderStories, renderStory } from "../views/storyViews";
 
 const router = express.Router();
 
 router.get("/", asyncHandler(async (req, res, _) => {
-  const stories = await fetchStories();
+  const { cursor } = req.query;
+  let c = null;
+  if (cursor) {
+    c = Number(cursor)
+  }
+  const {stories, nextCursor} = await fetchStoriesByPage(c);
   const userId = res.locals.userId;
-  const data = await renderStories(stories, userId);
+  const data = await renderStories(stories, userId, nextCursor);
   res.send(data);
 }));
 

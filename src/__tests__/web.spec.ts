@@ -37,14 +37,30 @@ describe("API", () => {
         .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toBe(200);
-      expect(response.body.length).toBeGreaterThan(0);
-      expect(response.body).toEqual(
+      expect(response.body.stories.length).toBeGreaterThan(0);
+      expect(response.body.stories).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             id: story.id,
           }),
         ])
       );
+      expect(response.body.nextCursor).toBeNull();
+    });
+
+    it("returns nextCursor when there are more stories", async () => {
+      for (let i = 0; i < 11; i++) {
+        await createStory({
+          title: `test title ${i}`,
+          body: `test body ${i}`,
+        });
+      }
+      const response = await request(app)
+        .get("/stories")
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.nextCursor).not.toBeNull();
     });
   });
 
