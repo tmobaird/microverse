@@ -44,7 +44,7 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "openai": "^4.12.1",
+    "openai": "^4.16.1",
     "prettier": "^3.0.3",
     "prisma": "^5.4.2"
   }

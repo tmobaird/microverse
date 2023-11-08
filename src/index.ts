@@ -44,13 +44,13 @@ function buildPrompt(input: PromptInput): string {
   output += "Write a short story that follows the following prompt:\n";
   output += `The theme of the story should be ${input.theme}. The story should use this premise for inspiration: "${input.premise}"\n`;
   output += `The story should be of the ${input.genres.join(
-    ", ",
+    ", "
   )} genre(s), set in the ${input.timePeriod} in ${input.location}.\n`;
   output += `The ending of the story should be a ${input.endingStyle.value}, ${input.endingStyle.description}.\n`;
   output += `The target audience for this story is people ${input.ageRange}.\n`;
   if (keywords.length > 0) {
     output += `The additional descriptors that should influence the plot of the story are: ${keywords.join(
-      ", ",
+      ", "
     )}.\n`;
   }
   output += `You can take any creative freedom when writing the story. Avoid calling out the part of the story that the text is in.\n`;
@@ -70,6 +70,7 @@ interface Story {
 
 const generateStory = async (prompt: string): Promise<Story | null> => {
   const chatCompletion = await openai.chat.completions.create({
+    response_format: { type: "json_object" },
     messages: [
       {
         role: "system",
@@ -78,7 +79,7 @@ const generateStory = async (prompt: string): Promise<Story | null> => {
       },
       { role: "user", content: prompt },
     ],
-    model: "gpt-3.5-turbo",
+    model: "gpt-4-1106-preview",
     n: 1,
   });
 
@@ -91,7 +92,7 @@ const generateStory = async (prompt: string): Promise<Story | null> => {
       console.log(
         "Error parsing story",
         error,
-        chatCompletion.choices[0].message.content,
+        chatCompletion.choices[0].message.content
       );
       return null;
     }
@@ -158,7 +159,9 @@ async function main() {
       if (story) {
         console.log(`===== ${story.title} =====`);
         console.log(story.story);
-        const storyGoodToGo = await confirm({ message: "Is this story sufficient?" });
+        const storyGoodToGo = await confirm({
+          message: "Is this story sufficient?",
+        });
         if (!storyGoodToGo) {
           console.log("Exiting");
           return;
