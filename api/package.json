@@ -17,6 +17,7 @@
     "read": "tsc && node -r ./build/loadEnv build/read.js",
     "update": "tsc && node -r ./build/loadEnv build/update.js",
     "web": "node -r ./build/loadEnv build/web.js",
+    "web-deploy": "node build/web.js",
     "start": "npm run build && npm run web",
     "pretty": "prettier . --write"
   },
