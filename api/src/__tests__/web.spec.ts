@@ -49,7 +49,7 @@ describe("API", () => {
     });
 
     it("returns nextCursor when there are more stories", async () => {
-      for (let i = 0; i < 11; i++) {
+      for (let i = 0; i < 21; i++) {
         await createStory({
           title: `test title ${i}`,
           body: `test body ${i}`,

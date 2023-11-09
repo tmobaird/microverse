@@ -1,0 +1,51 @@
+{
+  "name": "story-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "dotenv -e .env.test jest --runInBand",
+    "test:watch": "test --watchAll",
+    "prisma": "prisma",
+    "db:reset": "prisma migrate reset",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy:migrate": "prisma migrate deploy",
+    "db:test:reset": "dotenv -e .env.test prisma migrate reset",
+    "db:test:migrate": "dotenv -e .env.test prisma migrate dev",
+    "build": "tsc",
+    "create": "tsc && node -r ./build/loadEnv build/index.js",
+    "read": "tsc && node -r ./build/loadEnv build/read.js",
+    "update": "tsc && node -r ./build/loadEnv build/update.js",
+    "web": "node -r ./build/loadEnv build/web.js",
+    "start": "npm run build && npm run web",
+    "pretty": "prettier . --write"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.4.10",
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.8.5",
+    "@types/supertest": "^2.0.14",
+    "dotenv-cli": "^7.3.0",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^3.2.0",
+    "@prisma/client": "^5.4.2",
+    "@types/express": "^4.17.19",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "openai": "^4.16.1",
+    "prettier": "^3.0.3",
+    "prisma": "^5.4.2"
+  }
+}
