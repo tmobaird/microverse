@@ -11,7 +11,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "pretty": "prettier . --write",
-    "deploy:update": "NODE_ENV=test eas update"
+    "deploy": "NODE_ENV=test eas update"
   },
   "dependencies": {
     "@gluestack-style/react": "^1.0.5",

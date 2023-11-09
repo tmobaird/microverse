@@ -9,7 +9,9 @@
         "test": "npm run test --workspaces",
         "start": "npm run start --workspaces",
         "start-api": "npm run start --workspace=api",
-        "start-native": "npm run start --workspace=native"
+        "start-native": "npm run start --workspace=native",
+        "deploy-api": "npm run deploy --workspace=api",
+        "deploy-native": "npm run deploy --workspace=native"
     },
     "dependencies": {},
     "devDependencies": {
