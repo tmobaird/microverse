@@ -11,6 +11,16 @@ export enum Direction {
   DOWN = "DOWN",
 }
 
+export type Image = {
+  id: number;
+  url: string;
+  blobId: string;
+  afterParagraph: number;
+  storyId: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Story = {
   id: number;
   title: string;
@@ -23,4 +33,5 @@ export type Story = {
   upVotes: number;
   downVotes: number;
   genres: string[];
+  images: Image[];
 };

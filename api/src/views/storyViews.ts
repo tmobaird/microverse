@@ -1,4 +1,5 @@
-import { Story } from "@prisma/client";
+import { Image, Story } from "@prisma/client";
+import { getImagesForStory } from "../repositories/imageRepository";
 import {
   getStoryVoteByUserId,
   getStoryVoteCounts,
@@ -7,10 +8,10 @@ import {
 export const renderStories = (
   stories: Story[],
   userId: string,
-  nextCursor: number | null
+  nextCursor: number | null,
 ) => {
   return Promise.all(
-    stories.map((story) => renderStory(story, userId, false))
+    stories.map((story) => renderStory(story, userId, false)),
   ).then((renderedStories) => {
     return {
       stories: renderedStories,
@@ -22,19 +23,26 @@ export const renderStories = (
 export const renderStory = async (
   story: Story,
   userId: string,
-  withBody: boolean = true
+  detailed: boolean = true,
 ) => {
   const voteCounts = await getStoryVoteCounts(story.id);
   const myVote = await getStoryVoteByUserId(story.id, userId);
+  let images: Image[] = [];
+
   let genres: string[] = [];
   if (story.genreList) {
     genres = story.genreList.split(",");
   }
 
+  if (detailed) {
+    images = await getImagesForStory(story.id);
+  }
+
   return {
     id: story.id,
     title: story.title,
-    ...(withBody ? { body: story.body } : {}),
+    ...(detailed ? { body: story.body } : {}),
+    ...(detailed ? { images: images } : {}),
     genres: genres,
     upVotes:
       voteCounts.find((voteCount) => voteCount.direction === "UP")?._count.id ||

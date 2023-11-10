@@ -31,6 +31,7 @@ const baseStory = {
   upVotes: 0,
   downVotes: 0,
   myVote: null,
+  images: [],
 };
 
 describe("StoryReaderScreen", () => {

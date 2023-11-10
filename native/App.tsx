@@ -59,7 +59,7 @@ const Router = () => {
 const UUIDBar = () => {
   const { uuid } = React.useContext(UserContext);
   return (
-    <Box>
+    <Box backgroundColor="$violet700">
       <Text>{uuid}</Text>
     </Box>
   );
@@ -87,7 +87,12 @@ export default function App() {
             }}
           >
             <View
-              style={{ position: "absolute", left: 25, right: 0, bottom: 25 }}
+              style={{
+                position: "absolute",
+                left: 25,
+                bottom: 10,
+                zIndex: 1000,
+              }}
             >
               <UUIDBar />
             </View>

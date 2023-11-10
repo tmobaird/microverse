@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 export const authenticator = function (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   if (req.path.includes("/token")) {
     next();
@@ -51,6 +51,6 @@ router.post("/decode", (req, res) => {
   } catch (error) {
     res.status(401).send({ message: "Invalid token" });
   }
-})
+});
 
 export default router;
