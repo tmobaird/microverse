@@ -26,7 +26,7 @@ export const createStory = async ({ title, body, genreList }: StoryParams) => {
 
 export const updateStory = async (
   id: number,
-  { title, body, genreList }: UpdateStoryParams
+  { title, body, genreList }: UpdateStoryParams,
 ) => {
   const updatedStory = await prisma.story.update({
     where: {
@@ -57,7 +57,7 @@ export const fetchStories = async () => {
 };
 
 export const fetchStoriesByPage = async (
-  cursor: number | null
+  cursor: number | null,
 ): Promise<{ stories: Story[]; nextCursor: number | null }> => {
   const take = 20;
   const stories = await prisma.story.findMany({

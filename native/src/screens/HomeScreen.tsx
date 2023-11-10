@@ -62,7 +62,7 @@ const HomeScreen = ({
                 } else {
                   return story;
                 }
-              })
+              }),
             )
             .filter((story) => story)}
           renderItem={renderStoryCard}

@@ -18,6 +18,7 @@ import {
   HStack,
   Heading,
   Icon,
+  Image,
   Pressable,
   ScrollView,
   Slider,
@@ -161,6 +162,43 @@ const StoryReaderScreen = ({
     handlePressVote(Direction.DOWN);
   };
 
+  const renderStoryContent = (story: Story) => {
+    let contents = story.body.split("\n").map((paragraph) => (
+      <Text
+        key={Math.random()}
+        size={textSizeList[sliderValue]}
+        sx={colorTheme === "SYSTEM" ? systemTextSx : undefined}
+        color={
+          colorTheme !== "SYSTEM"
+            ? colorThemeMapping[colorTheme].color
+            : undefined
+        }
+      >
+        {paragraph}
+      </Text>
+    ));
+    story.images.forEach((image) => {
+      contents = [
+        ...contents.slice(0, image.afterParagraph),
+        <Image
+          key={Math.random()}
+          size="2xl"
+          alt="Image"
+          alignSelf="center"
+          rounded="$lg"
+          borderColor="$trueGray600"
+          borderWidth="$2"
+          source={{
+            uri: image.url,
+          }}
+        />,
+        ...contents.slice(image.afterParagraph),
+      ];
+      image.afterParagraph;
+    });
+    return contents;
+  };
+
   return (
     <View
       backgroundColor={
@@ -192,17 +230,7 @@ const StoryReaderScreen = ({
               </Heading>
               <GenreList genres={story.data.genres} />
             </Center>
-            <Text
-              size={textSizeList[sliderValue]}
-              sx={colorTheme === "SYSTEM" ? systemTextSx : undefined}
-              color={
-                colorTheme !== "SYSTEM"
-                  ? colorThemeMapping[colorTheme].color
-                  : undefined
-              }
-            >
-              {story.data.body}
-            </Text>
+            {renderStoryContent(story.data)}
             <Box height="$40" />
           </VStack>
         )}

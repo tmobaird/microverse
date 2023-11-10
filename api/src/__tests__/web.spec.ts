@@ -43,7 +43,7 @@ describe("API", () => {
           expect.objectContaining({
             id: story.id,
           }),
-        ])
+        ]),
       );
       expect(response.body.nextCursor).toBeNull();
     });

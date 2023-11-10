@@ -19,6 +19,7 @@ model Story {
   updatedAt DateTime @updatedAt
 
   votes     Vote[]
+  images    Image[]
 }
 
 enum Direction {
@@ -34,4 +35,15 @@ model Vote {
   userId    String    @db.VarChar(255) @default("")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+}
+
+model Image {
+  id              Int       @id @default(autoincrement())
+  url             String
+  blobId          String    @db.VarChar(255) @default("")
+  afterParagraph  Int       @default(0)
+  story           Story     @relation(fields: [storyId], references: [id])
+  storyId         Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
