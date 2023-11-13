@@ -179,7 +179,7 @@ const StoryReaderScreen = ({
     ));
     story.images.forEach((image, index) => {
       contents = [
-        ...contents.slice(0, image.afterParagraph + index),
+        ...contents.slice(0, (image.afterParagraph + 1) + index),
         <Image
           key={Math.random()}
           size="2xl"
@@ -192,7 +192,7 @@ const StoryReaderScreen = ({
             uri: image.url,
           }}
         />,
-        ...contents.slice(image.afterParagraph + index),
+        ...contents.slice((image.afterParagraph + 1) + index),
       ];
       image.afterParagraph;
     });
