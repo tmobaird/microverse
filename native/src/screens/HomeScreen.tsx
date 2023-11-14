@@ -67,6 +67,7 @@ const HomeScreen = ({
             .filter((story) => story)}
           renderItem={renderStoryCard}
           onEndReached={() => stories.hasNextPage && stories.fetchNextPage()}
+          showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => (
             <VStack space="xl">
               {stories.data &&
