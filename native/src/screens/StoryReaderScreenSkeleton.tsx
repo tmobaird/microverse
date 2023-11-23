@@ -3,21 +3,21 @@ import React from "react";
 import Skeleton from "../Skeleton";
 
 const ParagraphSkeleton = () => (
-    <Box>
-        <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
-        <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
-        <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
-        <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
-        <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
-        <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
-        <Skeleton
-          height={16}
-          width="75%"
-          paddingVertical={8}
-          paddingHorizontal={2}
-        />
-      </Box>
-)
+  <Box>
+    <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
+    <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
+    <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
+    <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
+    <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
+    <Skeleton height={16} paddingVertical={8} paddingHorizontal={2} />
+    <Skeleton
+      height={16}
+      width="75%"
+      paddingVertical={8}
+      paddingHorizontal={2}
+    />
+  </Box>
+);
 const StoryReaderScreenSkeleton = () => (
   <View>
     <Center>

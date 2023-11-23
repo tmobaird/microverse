@@ -3,7 +3,7 @@ import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react-native";
 import { AxiosInstance } from "axios";
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../../screens/HomeScreen";
 
 describe("renders correctly", () => {
   it("does something", async () => {

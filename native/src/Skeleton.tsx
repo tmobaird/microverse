@@ -21,7 +21,7 @@ const Skeleton = ({
         toValue: 1,
         duration: 1000,
         useNativeDriver: false,
-      })
+      }),
     );
 
     shimmerAnimation.start();

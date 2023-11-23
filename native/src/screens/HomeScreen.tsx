@@ -51,7 +51,7 @@ const HomeScreen = ({
 
   return (
     <View paddingTop={50} paddingHorizontal={10}>
-      {stories.isLoading && <HomeScreenSkeleton/>}
+      {stories.isLoading && <HomeScreenSkeleton />}
       {stories.isError && <Text>Error: Failed to load</Text>}
       {stories.data && (
         <FlatList

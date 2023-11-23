@@ -47,11 +47,13 @@ const getEmojiForGenre = (
 };
 
 const GenreList = ({ genres }: { genres: string[] }) => {
+  let genresToDisplay = genres.filter((genre) => genreMap[genre] !== undefined);
   return (
-    <Box>
+    <Box accessibilityLabel="Genre List">
       <AvatarGroup>
-        {genres.map((genre) => (
+        {genresToDisplay.map((genre) => (
           <Avatar
+            accessibilityLabel={genre}
             key={genre}
             sx={{
               _dark: {
