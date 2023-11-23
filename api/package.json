@@ -2,7 +2,7 @@
   "name": "story-generator",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "create.js",
   "scripts": {
     "test": "dotenv -e .env.test jest --runInBand",
     "test:watch": "test --watchAll",
@@ -13,7 +13,7 @@
     "db:test:reset": "dotenv -e .env.test prisma migrate reset",
     "db:test:migrate": "dotenv -e .env.test prisma migrate dev",
     "build": "tsc",
-    "create": "tsc && node -r ./build/loadEnv build/index.js",
+    "create": "tsc && node -r ./build/loadEnv build/create.js",
     "oneOff": "tsc && node -r ./build/loadEnv build/oneOff.js",
     "createImage": "tsc && node -r ./build/loadEnv build/images.js",
     "read": "tsc && node -r ./build/loadEnv build/read.js",

@@ -1,4 +1,4 @@
-import { checkbox, confirm, input, select } from "@inquirer/prompts";
+import { checkbox, confirm, editor, input, select } from "@inquirer/prompts";
 import { Image } from "@prisma/client";
 import OpenAI from "openai";
 import { generateImage, saveImageToS3 } from "./images";
@@ -202,7 +202,7 @@ const saveImages = async (
 async function main(dryRun = false) {
   try {
     const theme = await input({ message: "Theme" });
-    const premise = await input({ message: "Premise" });
+    const premise = await editor({ message: "Premise" });
 
     const genres = await checkbox({
       message: "Select genres",
@@ -215,6 +215,10 @@ async function main(dryRun = false) {
         { value: "action + adventure" },
         { value: "mystery" },
         { value: "historical fiction" },
+        { value: "thriller" },
+        { value: "biography" },
+        { value: "memoir" },
+        { value: "humor" },
       ],
     });
 

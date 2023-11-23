@@ -12,6 +12,7 @@
         "start-native": "npm run start --workspace=native",
         "deploy-api": "npm run deploy --workspace=api",
         "deploy-native": "npm run deploy --workspace=native",
+        "create-story": "npm run create --workspace=api",
         "pretty": "npm run pretty --workspaces"
     },
     "dependencies": {},
