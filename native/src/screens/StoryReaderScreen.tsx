@@ -36,6 +36,7 @@ import { AxiosInstance } from "axios";
 import React from "react";
 import { Direction, Navigation, Story } from "../../types";
 import GenreList from "./GenreList";
+import StoryReaderScreenSkeleton from "./StoryReaderScreenSkeleton";
 
 type ColorTheme = "SYSTEM" | "WHITE" | "BLACK" | "PAPER" | "PURPLE";
 
@@ -209,7 +210,7 @@ const StoryReaderScreen = ({
     >
       <ScrollView paddingHorizontal="$5" marginTop="$16">
         <StatusBar />
-        {story.isLoading && <Text>Loading...</Text>}
+        {story.isLoading && <StoryReaderScreenSkeleton />}
         {story.isError && <Text>Error: Failed to load</Text>}
         {story.data && (
           <VStack space="md">

@@ -12,6 +12,7 @@ import { AxiosInstance } from "axios";
 import React from "react";
 import { Navigation, Story } from "../../types";
 import StoryCard from "./StoryCard";
+import HomeScreenSkeleton from "./HomeScreenSkeleton";
 
 type StoryResponse = {
   stories: Story[];
@@ -50,7 +51,7 @@ const HomeScreen = ({
 
   return (
     <View paddingTop={50} paddingHorizontal={10}>
-      {stories.isLoading && <Text>Loading...</Text>}
+      {stories.isLoading && <HomeScreenSkeleton/>}
       {stories.isError && <Text>Error: Failed to load</Text>}
       {stories.data && (
         <FlatList
