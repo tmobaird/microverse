@@ -20,10 +20,11 @@ const updateStoryFlow = async () => {
     const newValue = await input({
       message: `Enter new ${fieldToUpdate}`,
     });
+    const processedValue = newValue.replace(/\\n/g, "\n");
 
     try {
       const updatedStory = await updateStory(targetStory.id, {
-        [fieldToUpdate]: newValue,
+        [fieldToUpdate]: processedValue,
       });
       console.log("Story updated", updatedStory);
     } catch (e) {

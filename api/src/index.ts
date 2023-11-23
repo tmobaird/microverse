@@ -90,7 +90,8 @@ const generateStory = async (prompt: string): Promise<Story | null> => {
     try {
       const rawStory = chatCompletion.choices[0].message.content;
       const storyObject = JSON.parse(rawStory) as Story;
-      return storyObject;
+      const processedBody = storyObject.story.replace(/\\n/g, "\n");
+      return { ...storyObject, story: processedBody };
     } catch (error) {
       console.log(
         "Error parsing story",
