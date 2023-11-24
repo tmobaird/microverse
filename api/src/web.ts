@@ -5,7 +5,6 @@ import authenticationController, {
 } from "./controllers/authenticationController";
 import storiesController from "./controllers/storiesController";
 import votesController from "./controllers/votesController";
-import { generateToken } from "./jwtService";
 const morgan = require("morgan");
 
 const app = express();
