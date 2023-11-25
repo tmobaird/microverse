@@ -35,6 +35,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import React from "react";
 import { Direction, Navigation, Story } from "../../types";
+import BaseScreen from "../BaseScreen";
 import GenreList from "./GenreList";
 import StoryReaderScreenSkeleton from "./StoryReaderScreenSkeleton";
 
@@ -201,206 +202,209 @@ const StoryReaderScreen = ({
   };
 
   return (
-    <View
-      backgroundColor={
-        colorTheme !== "SYSTEM"
-          ? colorThemeMapping[colorTheme].backgroundColor
-          : undefined
-      }
-    >
-      <ScrollView paddingHorizontal="$5" marginTop="$16">
-        <StatusBar />
-        {story.isLoading && <StoryReaderScreenSkeleton />}
-        {story.isError && <Text>Error: Failed to load</Text>}
-        {story.data && (
-          <VStack space="md">
-            <Center>
-              <Heading
-                textAlign="center"
-                size="xl"
-                lineHeight="$xl"
-                pb="$2"
-                sx={colorTheme === "SYSTEM" ? systemTextSx : undefined}
-                color={
-                  colorTheme !== "SYSTEM"
-                    ? colorThemeMapping[colorTheme].color
-                    : undefined
-                }
-              >
-                {story.data.id}. {story.data.title}
-              </Heading>
-              <GenreList genres={story.data.genres} />
-            </Center>
-            {renderStoryContent(story.data)}
-            <Box height="$40" />
-          </VStack>
-        )}
-      </ScrollView>
-      {story.data && (
-        <Fab
-          accessibilityLabel="More"
-          size="md"
-          placement="bottom right"
-          marginBottom={20}
-          isHovered={false}
-          isDisabled={false}
-          isPressed={false}
-          backgroundColor="$trueGray700"
-          rounded="$lg"
-          onPress={handleClose}
-          sx={{
-            _dark: {
-              backgroundColor: "$trueGray700",
-            },
-            _light: {
-              backgroundColor: "$trueGray900",
-            },
-          }}
-        >
-          <FabIcon as={ThreeDotsIcon} size="xl" />
-        </Fab>
-      )}
-      {story.data && (
-        <Actionsheet
-          isOpen={showActionsheet}
-          onClose={handleClose}
-          zIndex={999}
-        >
-          <ActionsheetBackdrop />
-          <ActionsheetContent pb="$8">
-            <ActionsheetDragIndicatorWrapper>
-              <ActionsheetDragIndicator />
-            </ActionsheetDragIndicatorWrapper>
-            <ActionsheetItem disabled>
-              <VStack width="100%">
-                <Text pb="$2">Page Color</Text>
-                <HStack>
-                  {["WHITE", "BLACK", "PAPER", "PURPLE"].map((ct) => (
-                    <Pressable
-                      key={ct}
-                      sx={{
-                        ":active": {
-                          opacity: 0.5,
-                        },
-                      }}
-                      onPress={() => setColorTheme(ct as ColorTheme)}
-                    >
-                      <Box
-                        width="$8"
-                        height="$8"
-                        bgColor={`${
-                          colorThemeMapping[ct as ColorTheme].backgroundColor
-                        }`}
-                        borderColor={
-                          colorTheme == ct ? "$primary400" : "$trueGray400"
-                        }
-                        borderWidth="$2"
-                        rounded="$full"
-                        marginRight="$2"
-                      />
-                    </Pressable>
-                  ))}
-                </HStack>
-              </VStack>
-            </ActionsheetItem>
-            <ActionsheetItem disabled>
-              <VStack width="100%">
-                <Text pb="$2">Font Size</Text>
-                <Center>
-                  <HStack space="md" alignItems="center">
-                    <Text size="sm">AB</Text>
-                    <Box width="$5/6">
-                      <Slider
-                        size="md"
-                        orientation="horizontal"
-                        isDisabled={false}
-                        isReversed={false}
-                        minValue={0}
-                        maxValue={5}
-                        step={1}
-                        sliderTrackHeight={4}
-                        value={sliderValue}
-                        thumbSize="sm"
-                        onChange={handleSliderChange}
-                      >
-                        <SliderTrack>
-                          <SliderFilledTrack />
-                        </SliderTrack>
-                        <SliderThumb alignSelf="center" />
-                      </Slider>
-                    </Box>
-                    <Text size="xl">AB</Text>
-                  </HStack>
-                </Center>
-              </VStack>
-            </ActionsheetItem>
-            <ActionsheetItem onPress={handlePressUpVote}>
-              <ActionsheetIcon>
-                <Icon
-                  as={ArrowUpIcon}
+    <BaseScreen>
+      <View
+        backgroundColor={
+          colorTheme !== "SYSTEM"
+            ? colorThemeMapping[colorTheme].backgroundColor
+            : undefined
+        }
+      >
+        <ScrollView>
+          <StatusBar />
+          {story.isLoading && <StoryReaderScreenSkeleton />}
+          {story.isError && <Text>Error: Failed to load</Text>}
+          {story.data && (
+            <VStack space="md">
+              <Center>
+                <Heading
+                  textAlign="center"
+                  size="xl"
+                  lineHeight="$xl"
+                  pb="$2"
+                  sx={colorTheme === "SYSTEM" ? systemTextSx : undefined}
                   color={
-                    story.data.myVote?.direction === "UP"
-                      ? "$green500"
-                      : "$coolGray400"
+                    colorTheme !== "SYSTEM"
+                      ? colorThemeMapping[colorTheme].color
+                      : undefined
                   }
-                />
-              </ActionsheetIcon>
-              <ActionsheetItemText>
-                <HStack space="sm">
-                  <Text>Up Vote</Text>
-                  <Badge
-                    justifyContent="center"
-                    size="lg"
-                    variant="solid"
-                    rounded="$full"
-                    bgColor={
+                >
+                  {story.data.id}. {story.data.title}
+                </Heading>
+                <GenreList genres={story.data.genres} />
+              </Center>
+              {renderStoryContent(story.data)}
+              <Box height="$40" />
+            </VStack>
+          )}
+        </ScrollView>
+        {story.data && (
+          <Fab
+            accessibilityLabel="More"
+            size="md"
+            placement="bottom right"
+            marginBottom={100}
+            isHovered={false}
+            isDisabled={false}
+            isPressed={false}
+            rounded="$lg"
+            onPress={handleClose}
+            sx={{
+              _dark: {
+                backgroundColor: "$trueGray700",
+              },
+              _light: {
+                backgroundColor: "$trueGray900",
+              },
+            }}
+          >
+            <FabIcon as={ThreeDotsIcon} size="xl" />
+          </Fab>
+        )}
+        {story.data && (
+          <Actionsheet
+            isOpen={showActionsheet}
+            onClose={handleClose}
+            zIndex={999}
+          >
+            <ActionsheetBackdrop />
+            <ActionsheetContent pb="$8">
+              <ActionsheetDragIndicatorWrapper>
+                <ActionsheetDragIndicator />
+              </ActionsheetDragIndicatorWrapper>
+              <ActionsheetItem disabled>
+                <VStack width="100%">
+                  <Text pb="$2">Page Color</Text>
+                  <HStack>
+                    {["WHITE", "BLACK", "PAPER", "PURPLE"].map((ct) => (
+                      <Pressable
+                        key={ct}
+                        sx={{
+                          ":active": {
+                            opacity: 0.5,
+                          },
+                        }}
+                        onPress={() => setColorTheme(ct as ColorTheme)}
+                      >
+                        <Box
+                          width="$8"
+                          height="$8"
+                          bgColor={`${
+                            colorThemeMapping[ct as ColorTheme].backgroundColor
+                          }`}
+                          borderColor={
+                            colorTheme == ct ? "$primary400" : "$trueGray400"
+                          }
+                          borderWidth="$2"
+                          rounded="$full"
+                          marginRight="$2"
+                        />
+                      </Pressable>
+                    ))}
+                  </HStack>
+                </VStack>
+              </ActionsheetItem>
+              <ActionsheetItem disabled>
+                <VStack width="100%">
+                  <Text pb="$2">Font Size</Text>
+                  <Center>
+                    <HStack space="md" alignItems="center">
+                      <Text size="sm">AB</Text>
+                      <Box width="$5/6">
+                        <Slider
+                          size="md"
+                          orientation="horizontal"
+                          isDisabled={false}
+                          isReversed={false}
+                          minValue={0}
+                          maxValue={5}
+                          step={1}
+                          sliderTrackHeight={4}
+                          value={sliderValue}
+                          thumbSize="sm"
+                          onChange={handleSliderChange}
+                        >
+                          <SliderTrack>
+                            <SliderFilledTrack />
+                          </SliderTrack>
+                          <SliderThumb alignSelf="center" />
+                        </Slider>
+                      </Box>
+                      <Text size="xl">AB</Text>
+                    </HStack>
+                  </Center>
+                </VStack>
+              </ActionsheetItem>
+              <ActionsheetItem onPress={handlePressUpVote}>
+                <ActionsheetIcon>
+                  <Icon
+                    as={ArrowUpIcon}
+                    color={
                       story.data.myVote?.direction === "UP"
                         ? "$green500"
-                        : "$trueGray400"
+                        : "$coolGray400"
                     }
-                  >
-                    <BadgeText color="$white">{story.data.upVotes}</BadgeText>
-                  </Badge>
-                </HStack>
-              </ActionsheetItemText>
-            </ActionsheetItem>
-            <ActionsheetItem onPress={handlePressDownVote}>
-              <ActionsheetIcon>
-                <Icon
-                  as={ArrowDownIcon}
-                  color={
-                    story.data.myVote?.direction === "DOWN"
-                      ? "$green500"
-                      : "$coolGray400"
-                  }
-                />
-              </ActionsheetIcon>
-              <ActionsheetItemText>
-                <HStack space="sm">
-                  <Text>Down Vote</Text>
-                  <Badge
-                    justifyContent="center"
-                    size="lg"
-                    variant="solid"
-                    rounded="$full"
-                    bgColor={
+                  />
+                </ActionsheetIcon>
+                <ActionsheetItemText>
+                  <HStack space="sm">
+                    <Text>Up Vote</Text>
+                    <Badge
+                      justifyContent="center"
+                      size="lg"
+                      variant="solid"
+                      rounded="$full"
+                      bgColor={
+                        story.data.myVote?.direction === "UP"
+                          ? "$green500"
+                          : "$trueGray400"
+                      }
+                    >
+                      <BadgeText color="$white">{story.data.upVotes}</BadgeText>
+                    </Badge>
+                  </HStack>
+                </ActionsheetItemText>
+              </ActionsheetItem>
+              <ActionsheetItem onPress={handlePressDownVote}>
+                <ActionsheetIcon>
+                  <Icon
+                    as={ArrowDownIcon}
+                    color={
                       story.data.myVote?.direction === "DOWN"
                         ? "$green500"
-                        : "$trueGray400"
+                        : "$coolGray400"
                     }
-                  >
-                    <BadgeText color="$white">{story.data.downVotes}</BadgeText>
-                  </Badge>
-                </HStack>
-              </ActionsheetItemText>
-            </ActionsheetItem>
-            <ActionsheetItem onPress={() => navigation.navigate("home", {})}>
-              <ActionsheetItemText>Exit Story</ActionsheetItemText>
-            </ActionsheetItem>
-          </ActionsheetContent>
-        </Actionsheet>
-      )}
-    </View>
+                  />
+                </ActionsheetIcon>
+                <ActionsheetItemText>
+                  <HStack space="sm">
+                    <Text>Down Vote</Text>
+                    <Badge
+                      justifyContent="center"
+                      size="lg"
+                      variant="solid"
+                      rounded="$full"
+                      bgColor={
+                        story.data.myVote?.direction === "DOWN"
+                          ? "$green500"
+                          : "$trueGray400"
+                      }
+                    >
+                      <BadgeText color="$white">
+                        {story.data.downVotes}
+                      </BadgeText>
+                    </Badge>
+                  </HStack>
+                </ActionsheetItemText>
+              </ActionsheetItem>
+              <ActionsheetItem onPress={() => navigation.navigate("home", {})}>
+                <ActionsheetItemText>Exit Story</ActionsheetItemText>
+              </ActionsheetItem>
+            </ActionsheetContent>
+          </Actionsheet>
+        )}
+      </View>
+    </BaseScreen>
   );
 };
 

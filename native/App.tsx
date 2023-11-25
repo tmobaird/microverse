@@ -1,12 +1,11 @@
 import { COLORMODES } from "@gluestack-style/react/lib/typescript/types";
 import { config } from "@gluestack-ui/config";
-import { Box, GluestackUIProvider, Text, View } from "@gluestack-ui/themed";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import { useColorScheme } from "react-native";
 import "react-native-get-random-values";
-import { screenBackgroundLight } from "./colors";
 import UserProvider, { UserContext } from "./src/UserProvider";
 import HomeScreen from "./src/screens/HomeScreen";
 import StoryReaderScreen from "./src/screens/StoryReaderScreen";
@@ -56,15 +55,6 @@ const Router = () => {
   }
 };
 
-const UUIDBar = () => {
-  const { uuid } = React.useContext(UserContext);
-  return (
-    <Box backgroundColor="$violet700">
-      <Text>{uuid}</Text>
-    </Box>
-  );
-};
-
 export default function App() {
   let colorScheme = useColorScheme();
 
@@ -75,29 +65,7 @@ export default function App() {
         colorMode={colorScheme as COLORMODES}
       >
         <UserProvider>
-          <View
-            style={{ flex: 1 }}
-            sx={{
-              _dark: {
-                backgroundColor: "$black",
-              },
-              _light: {
-                backgroundColor: screenBackgroundLight,
-              },
-            }}
-          >
-            <View
-              style={{
-                position: "absolute",
-                left: 25,
-                bottom: 10,
-                zIndex: 1000,
-              }}
-            >
-              <UUIDBar />
-            </View>
-            <Router />
-          </View>
+          <Router />
         </UserProvider>
       </GluestackUIProvider>
     </QueryClientProvider>

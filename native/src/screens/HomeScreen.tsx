@@ -5,14 +5,14 @@ import {
   Spinner,
   Text,
   VStack,
-  View,
 } from "@gluestack-ui/themed";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import React from "react";
 import { Navigation, Story } from "../../types";
-import StoryCard from "./StoryCard";
+import BaseScreen from "../BaseScreen";
 import HomeScreenSkeleton from "./HomeScreenSkeleton";
+import StoryCard from "./StoryCard";
 
 type StoryResponse = {
   stories: Story[];
@@ -50,7 +50,7 @@ const HomeScreen = ({
   };
 
   return (
-    <View paddingTop={50} paddingHorizontal={10}>
+    <BaseScreen>
       {stories.isLoading && <HomeScreenSkeleton />}
       {stories.isError && <Text>Error: Failed to load</Text>}
       {stories.data && (
@@ -94,7 +94,7 @@ const HomeScreen = ({
         />
       )}
       {stories.isFetchingNextPage && <Spinner color="$indigo600" />}
-    </View>
+    </BaseScreen>
   );
 };
 
