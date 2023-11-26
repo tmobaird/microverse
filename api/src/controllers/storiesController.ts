@@ -49,7 +49,11 @@ router.get(
       data = "Story not found";
     }
 
-    res.status(status).send(data);
+    if (res.locals.contentType === "application/json") {
+      res.status(status).send(data);
+    } else {
+      res.render("pages/story", { story: data })
+    }
   }),
 );
 
