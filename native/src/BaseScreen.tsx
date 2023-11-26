@@ -26,6 +26,7 @@ const BaseScreen = ({ children }: { children: React.ReactNode }) => {
   return (
     <View
       paddingHorizontal={10}
+      paddingBottom={100}
       style={{ flex: 1 }}
       sx={{
         _dark: {

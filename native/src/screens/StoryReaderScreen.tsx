@@ -243,7 +243,6 @@ const StoryReaderScreen = ({
             accessibilityLabel="More"
             size="md"
             placement="bottom right"
-            marginBottom={100}
             isHovered={false}
             isDisabled={false}
             isPressed={false}
