@@ -210,7 +210,7 @@ const StoryReaderScreen = ({
             : undefined
         }
       >
-        <ScrollView>
+        <ScrollView paddingHorizontal="$5" marginTop="$16">
           <StatusBar />
           {story.isLoading && <StoryReaderScreenSkeleton />}
           {story.isError && <Text>Error: Failed to load</Text>}

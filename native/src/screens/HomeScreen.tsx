@@ -50,7 +50,13 @@ const HomeScreen = ({
   };
 
   return (
-    <BaseScreen>
+    <BaseScreen
+      style={{
+        paddingHorizontal: 10,
+        paddingBottom: 150,
+      }}
+      withMenu
+    >
       {stories.isLoading && <HomeScreenSkeleton />}
       {stories.isError && <Text>Error: Failed to load</Text>}
       {stories.data && (
