@@ -7,6 +7,12 @@ export const authenticator = function (
   res: Response,
   next: NextFunction,
 ) {
+  // stories page is public
+  if (req.accepts("html") && req.path.match(/^\/(stories)\/\d+/)) {
+    next();
+    return;
+  }
+
   if (req.path.includes("/token")) {
     next();
     return;

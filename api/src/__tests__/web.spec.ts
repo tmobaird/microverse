@@ -34,7 +34,8 @@ describe("API", () => {
 
       const response = await request(app)
         .get("/stories")
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .set("Accept", `application/json`);
 
       expect(response.status).toBe(200);
       expect(response.body.stories.length).toBeGreaterThan(0);
@@ -57,7 +58,8 @@ describe("API", () => {
       }
       const response = await request(app)
         .get("/stories")
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .set("Accept", `application/json`);
 
       expect(response.status).toBe(200);
       expect(response.body.nextCursor).not.toBeNull();
@@ -74,7 +76,8 @@ describe("API", () => {
 
       const response = await request(app)
         .get(`/stories/${story.id}`)
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .set("Accept", `application/json`);
       expect(response.status).toBe(200);
       expect(response.body.id).toBe(story.id);
       expect(response.body.title).toBe(story.title);
@@ -86,8 +89,23 @@ describe("API", () => {
     it("returns 404 when story does not exist", async () => {
       const response = await request(app)
         .get(`/stories/123`)
-        .set("Authorization", `Bearer ${token}`);
+        .set("Authorization", `Bearer ${token}`)
+        .set("Accept", `application/json`);
       expect(response.status).toBe(404);
+    });
+
+    it("returns 200 when Accept is html and no token is present", async () => {
+      const story = await createStory({
+        title: "test title",
+        body: "test body",
+        genreList: "Action/Adventure,Romance",
+      });
+
+      const response = await request(app)
+        .get(`/stories/${story.id}`)
+        .set("Accept", `text/html`);
+      expect(response.status).toBe(200);
+      expect(response.text).toContain(story.title);
     });
   });
 

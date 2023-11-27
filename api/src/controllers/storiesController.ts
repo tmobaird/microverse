@@ -6,7 +6,7 @@ import {
   fetchStory,
 } from "../repositories/storyRepository";
 import { createStoryVote } from "../repositories/storyVoteRepository";
-import { renderStories, renderStory } from "../views/storyViews";
+import { renderStories, renderStory } from "../viewHelpers/storyViewHelpers";
 
 const router = express.Router();
 
@@ -49,10 +49,10 @@ router.get(
       data = "Story not found";
     }
 
-    if (res.locals.contentType === "application/json") {
-      res.status(status).send(data);
+    if (req.accepts("html")) {
+      res.render("pages/story", { story: data });
     } else {
-      res.render("pages/story", { story: data })
+      res.status(status).send(data);
     }
   }),
 );
