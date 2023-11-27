@@ -1,6 +1,13 @@
 <head>
   <% if (story) { %>
   <title>microverse - <%= story.title %></title>
+  <meta property="og:title" content="<%= story.title %>">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="<%= story.body.slice(0, 100) + "..." %>">
+  <% if (story.images[0]) { %>
+  <meta property="og:image" content="<%= story.images[0].url %>">
+  <% } %>
+  <meta property="og:url" content="https://story-generator.fly.dev/stories/<%= story.id %>">
   <% } else { %>
   <title>microverse</title>
   <% } %>
