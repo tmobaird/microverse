@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("../shared/head.ejs") %>
+
 <body class="bg-white dark:bg-black text-lg text-black dark:text-white pb-24">
   <%- include("../shared/navbar.ejs") %>
   <main class="container mx-auto">
     <div>
       <% if (story.body) { %>
-      <% parts = story.body.split('\n').map((p) => `<p>${p}</p>`) %>
+      <% parts = story.body.split('\n\n').map((p) => `<p>${p}</p>`) %>
       <% story.images.forEach((image, index) => { %>
-      <% parts = [...parts.splice(0, image.afterParagraph + 1 + index), `<img src="${image.url}" alt="${image.alt}" class="h-96 rounded border-2 border-slate-600 dark:border-slate-300">`, ...parts.slice(image.afterParagraph + 1 + index)] %>
+      <% parts.splice(image.afterParagraph + 1 + index, 0, `<img src="${image.url}" alt="${image.alt}" class="h-96 rounded border-2 border-slate-600 dark:border-slate-300">`) %>
       <% }) %>
       <h1 class="text-3xl font-bold text-center mt-12"><%= story.id %>. <%= story.title %></h1>
       <div class="flex justify-center items-center mt-2"><%- include("../partials/genres.ejs", {genres: story.genres}) %></div>
