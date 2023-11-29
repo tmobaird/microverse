@@ -54,6 +54,7 @@
     "openai": "^4.16.1",
     "prettier": "^3.0.3",
     "prisma": "^5.4.2",
+    "serve-favicon": "^2.5.0",
     "uuid": "^9.0.1"
   }
 }

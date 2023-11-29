@@ -4,16 +4,16 @@
 
 <body class="bg-white dark:bg-black text-lg text-black dark:text-white pb-24">
   <%- include("../shared/navbar.ejs") %>
-  <main class="container mx-auto">
+  <main class="lg:container mx-auto">
     <div>
       <% if (story.body) { %>
-      <% parts = story.body.split('\n\n').map((p) => `<p>${p}</p>`) %>
+      <% parts = story.body.split('\n\n').map((p) => `<p class="text-5xl leading-normal lg:text-lg">${p}</p>`) %>
       <% story.images.forEach((image, index) => { %>
-      <% parts.splice(image.afterParagraph + 1 + index, 0, `<img src="${image.url}" alt="${image.alt}" class="h-96 rounded border-2 border-slate-600 dark:border-slate-300">`) %>
+      <% parts.splice(image.afterParagraph + 1 + index, 0, `<img src="${image.url}" alt="${image.alt}" class="w-auto h-auto lg:h-96 rounded border-2 border-slate-600 dark:border-slate-300">`) %>
       <% }) %>
-      <h1 class="text-3xl font-bold text-center mt-12"><%= story.id %>. <%= story.title %></h1>
-      <div class="flex justify-center items-center mt-2"><%- include("../partials/genres.ejs", {genres: story.genres}) %></div>
-      <div class="mt-5 mx-20">
+      <h1 class="text-6xl lg:text-3xl mx-5 lg:mx-0 font-bold text-center mt-12"><%= story.id %>. <%= story.title %></h1>
+      <div class="flex justify-center items-center mt-5"><%- include("../partials/genres.ejs", {genres: story.genres}) %></div>
+      <div class="mt-5 mx-5 lg:mx-20">
         <% parts.forEach(function(part){ %>
         <div class="mb-2 flex justify-center">
           <%- part %>

@@ -1,7 +1,7 @@
 <% genreClasses = { "romance": "bg-rose-300", "horror": "bg-slate-800", "fantasy": "bg-green-800", "science fiction": "bg-indigo-600", "dystopian": "bg-sky-400", "action + adventure": "bg-violet-400", "mystery": "bg-gray-400", "historical fiction": "bg-amber-500", "thriller": "", "biography": "" } %>
 <div class="flex -space-x-1 overflow-hidden">
   <% genres.forEach(function(genre){ %>
-  <span class="inline-flex items-center mx-2.5 px-2.5 py-0.5 rounded-full text-xs font-medium text-white <%= genreClasses[genre] || "bg-gray-800" %>">
+  <span class="inline-flex items-center mx-2.5 px-4 py-0.5 rounded-full text-3xl lg:text-xs font-medium text-white <%= genreClasses[genre] || "bg-gray-800" %>">
     <%= genre %>
   </span>
   <% }); %>
