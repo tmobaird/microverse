@@ -1,4 +1,4 @@
-import { confirm, input, select } from "@inquirer/prompts";
+import { confirm, editor, input, select } from "@inquirer/prompts";
 import { fetchStories, updateStory } from "./repositories/storyRepository";
 
 const updateStoryFlow = async () => {
@@ -17,7 +17,7 @@ const updateStoryFlow = async () => {
       choices: [{ value: "title" }, { value: "body" }, { value: "genreList" }],
     });
 
-    const newValue = await input({
+    const newValue = await editor({
       message: `Enter new ${fieldToUpdate}`,
     });
     const processedValue = newValue.replace(/\\n/g, "\n");
