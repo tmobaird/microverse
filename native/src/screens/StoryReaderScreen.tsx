@@ -13,6 +13,7 @@ import {
   BadgeText,
   Box,
   Center,
+  ExternalLinkIcon,
   Fab,
   FabIcon,
   HStack,
@@ -34,6 +35,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import React from "react";
+import { Alert, Share } from "react-native";
 import { Direction, Navigation, Story } from "../../types";
 import BaseScreen from "../BaseScreen";
 import GenreList from "./GenreList";
@@ -162,6 +164,17 @@ const StoryReaderScreen = ({
 
   const handlePressDownVote = () => {
     handlePressVote(Direction.DOWN);
+  };
+
+  const handleShare = async () => {
+    try {
+      await Share.share({
+        title: `Check out the story - ${story.data?.title} on microverse!`,
+        url: `${process.env.EXPO_PUBLIC_API_URL}/${story.data?.id}`,
+      });
+    } catch (error: any) {
+      Alert.alert("Failed to share: " + error.message);
+    }
   };
 
   const renderStoryContent = (story: Story) => {
@@ -395,6 +408,12 @@ const StoryReaderScreen = ({
                     </Badge>
                   </HStack>
                 </ActionsheetItemText>
+              </ActionsheetItem>
+              <ActionsheetItem onPress={handleShare}>
+                <ActionsheetIcon>
+                  <Icon as={ExternalLinkIcon} />
+                </ActionsheetIcon>
+                <ActionsheetItemText>Share</ActionsheetItemText>
               </ActionsheetItem>
               <ActionsheetItem onPress={() => navigation.navigate("home", {})}>
                 <ActionsheetItemText>Exit Story</ActionsheetItemText>
