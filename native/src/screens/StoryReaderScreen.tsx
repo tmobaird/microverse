@@ -170,7 +170,7 @@ const StoryReaderScreen = ({
     try {
       await Share.share({
         title: `Check out the story - ${story.data?.title} on microverse!`,
-        url: `${process.env.EXPO_PUBLIC_API_URL}/${story.data?.id}`,
+        url: `${process.env.EXPO_PUBLIC_API_URL}/stories/${story.data?.id}`,
       });
     } catch (error: any) {
       Alert.alert("Failed to share: " + error.message);
